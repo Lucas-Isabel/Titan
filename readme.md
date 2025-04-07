@@ -15,7 +15,7 @@ local num3 = num1 + num2
 print(num3) -- saída esperada: 30.0
 
 local pessoa: TitanTable = {
-  nome: strig = "Ana",
+  nome: string = "Ana",
   idade: int = 25
 }
 
