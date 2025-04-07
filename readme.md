@@ -50,7 +50,7 @@ print(pessoa.nome) -- saída esperada: Ana
   - Soma (`+`)
   - Concatenação de strings (`..`)
 - [x] Função `print(...)`
-- [x] Suporte básico a **`TitanTable`**:
+- [ ] Suporte básico a **`TitanTable`**:
   - Criação com `{ chave = valor }`
   - Acesso por `obj.chave` ou `obj["chave"]`
 - [ ] Operadores relacionais (`==`, `<`, `>`)
