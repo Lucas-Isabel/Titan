@@ -14,9 +14,9 @@ local num2: float = 20.0
 local num3 = num1 + num2
 print(num3) -- saída esperada: 30.0
 
-local pessoa = {
-  nome = "Ana",
-  idade = 25
+local pessoa: TitanTable = {
+  nome: strig = "Ana",
+  idade: int = 25
 }
 
 print(pessoa.nome) -- saída esperada: Ana
