@@ -14,9 +14,9 @@ local num2: float = 20.0
 local num3 = num1 + num2
 print(num3) -- saída esperada: 30.0
 
-local pessoa = {
-  nome = "Ana",
-  idade = 25
+local pessoa: TitanTable = {
+  nome: string = "Ana",
+  idade: int = 25
 }
 
 print(pessoa.nome) -- saída esperada: Ana
@@ -50,7 +50,7 @@ print(pessoa.nome) -- saída esperada: Ana
   - Soma (`+`)
   - Concatenação de strings (`..`)
 - [x] Função `print(...)`
-- [x] Suporte básico a **`TitanTable`**:
+- [ ] Suporte básico a **`TitanTable`**:
   - Criação com `{ chave = valor }`
   - Acesso por `obj.chave` ou `obj["chave"]`
 - [ ] Operadores relacionais (`==`, `<`, `>`)
