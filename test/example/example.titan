@@ -1,9 +1,9 @@
-local var1: string = "lucas"
+local var1: any = "lucas"
 
 print(var1)
 
-local var2: string = " isabel"
-
+local var2: string = "isabel"
+var1 = "lucas "
 print(var2)
 
 local var3: string = var1 + var2

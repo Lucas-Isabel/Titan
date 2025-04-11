@@ -188,6 +188,10 @@ func checkType(typeHint string, value TitanValue) bool {
 	case "string":
 		_, ok := value.(string)
 		return ok
+	case "nil":
+		return value == nil
+	case "any":
+		return true
 	default:
 		return true
 	}
