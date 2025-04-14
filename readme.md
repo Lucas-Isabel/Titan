@@ -1,20 +1,20 @@
-# Titan
+# 🐉 Titan
 
-**Titan** é uma linguagem de script experimental, fortemente inspirada no Lua, mas com tipagem estática simples e escrita 100% em Go.
+**Titan** é uma linguagem de script experimental, fortemente inspirada em Lua, com tipagem estática simples, escrita 100% em Go.
 
-O projeto busca simplicidade, segurança e extensibilidade. Titan é pensado para ser um ponto de partida para estudo e evolução: começa como interpretador, mas com visão futura para suporte a `async/await`, waitgroups e compilação JIT ou AOT.
+Ela foi projetada para ser **simples, segura e extensível**, evoluindo em etapas claras: começando como interpretador, passando por transpiler com verificação de tipos e chegando até suporte a `async/await`, concorrência e até mesmo compilação para bytecode ou binário.
 
 ---
 
-## ✨ Exemplo de código
+## ✨ Exemplo de código Titan
 
 ```lua
-local num1: int = 10
-local num2: float = 20.0
-local num3 = num1 + num2
+let num1: int = 10
+let num2: float = 20.0
+let num3 = num1 + num2
 print(num3) -- saída esperada: 30.0
 
-local pessoa: TitanTable = {
+let pessoa: TitanTable = {
   nome: string = "Ana",
   idade: int = 25
 }
@@ -24,52 +24,57 @@ print(pessoa.nome) -- saída esperada: Ana
 
 ---
 
+## 🧱 Etapas do Projeto
+
+### 1. **Execução de Lua com GopherLua**
+- Base mínima para rodar scripts Lua em Go.
+- Permite evoluir passo a passo com o runtime seguro e extensível.
+
+### 2. **Transpiler: Titan → Lua**
+- Lê código com tipagem (`Titan`) e converte para Lua puro.
+- Remove anotações como `: int`, mantendo o código Lua executável.
+
+### 3. **Verificador de Tipos (análise estática)**
+- Antes de rodar, o código é verificado para garantir tipos corretos.
+- Tipagem para variáveis, funções, parâmetros e retorno.
+- Erros emitidos em tempo de compilação.
+
+### 4. **Novas Funcionalidades**
+- `async`, `await` e waitgroups.
+- Controle de concorrência integrado à linguagem.
+- Exportação para bytecode, binário, ou até WebAssembly (WASM).
+
+---
+
 ## 🎯 Objetivos
 
-- Sintaxe leve, parecida com Lua
-- Escrita em Go puro, sem dependências externas
+- Sintaxe leve e familiar para quem conhece Lua
+- Escrita em Go puro (sem dependências C)
 - Tipagem estática simples: `int`, `float`, `string`, `bool`
-- `TitanTable` para estrutura dinâmica de chave-valor
-- Execução direta de arquivos `.titan`
-- Estrutura limpa para aprendizado de interpretadores
-- Rumo à concorrência com `async` e `await`
+- Estrutura dinâmica com `TitanTable`
+- Ideal para aprendizado de compiladores e linguagens
+- Rumo à concorrência e paralelismo com semântica clara
 
 ---
 
-## ✅ Funcionalidades da versão 1
+## ✅ Funcionalidades Atuais
 
-- [x] Interpretador via linha de comando
-- [x] Leitura e execução de arquivos `.titan`
-- [x] Tipos suportados:
-  - `int`
-  - `float`
-  - `string`
-  - `bool`
-  - `table` → via `TitanTable`
-- [x] Operações:
-  - Soma (`+`)
-  - Concatenação de strings (`..`)
-- [x] Função `print(...)`
-- [ ] Suporte básico a **`TitanTable`**:
-  - Criação com `{ chave = valor }`
-  - Acesso por `obj.chave` ou `obj["chave"]`
-- [ ] Operadores relacionais (`==`, `<`, `>`)
-- [ ] Condições (`if`, `else`)
-- [ ] Laços (`while`, `for`)
-- [ ] Funções definidas pelo usuário
+- [x] Execução de scripts `.titan`
+- [x] Tipagem básica: `int`, `float`, `string`, `bool`
+- [ ] `TitanTable` com acesso por ponto e string
+- [ ] Tipagem em functions: retorno, parametros e chamadas
 
 ---
 
-## 🚀 Futuro (v2 e além)
+## 🚀 Futuro da linguagem
 
-- [ ] `async`, `await` e `waitgroup`
-- [ ] Funções concorrentes com semântica clara
-- [ ] Compilação para bytecode intermediário
-- [ ] Suporte a módulos/imports
-- [ ] JIT / AOT opcional
-- [ ] Exportação como `.exe`, `.wasm`, etc
+- [ ] `async function` e `await`
+- [ ] `waitgroup` para controle de tarefas assíncronas
+- [ ] Analisador semântico completo e escopos aninhados
+- [ ] Compilação para bytecode
+- [ ] Exportação de `lua` para `.exe`
 
-#### Exemplo futuro planejado:
+### Exemplo Futuro:
 
 ```lua
 async function process()
@@ -99,23 +104,19 @@ await process()
 ```
 titan/
 │
-├── main.go               # Entrada do interpretador
+├── main.go               # Entrada principal
 │
-├── lexer/                # Tokenização
-│   ├── lexer.go
-│   ├── token.go
+├── runtime/              # Execução com GopherLua
+│   └── vm.go
 │
-├── parser/               # Parser + AST
-│   ├── parser.go
-│   ├── ast.go
+├── transpiler/           # Titan para Lua
+│   └── transpile.go
 │
-├── interpreter/          # Execução e ambiente de variáveis
-│   ├── interpreter.go
-│   ├── environment.go
-│   ├── types.go          # Definições como TitanValue, TitanTable
+├── typechecker/          # Verificador de tipos
+│   └── checker.go
 │
-├── examples/             # Exemplos de scripts `.titan`
-│   └── test.titan
+├── examples/             # Scripts Titan para teste
+│   └── hello.titan
 │
 ├── go.mod
 └── README.md
@@ -123,43 +124,19 @@ titan/
 
 ---
 
-## 📦 TitanTable
-
-`TitanTable` é a estrutura de dados que representa objetos, arrays e dicionários, de forma semelhante às *tables* do Lua. Ela permite armazenar pares `chave: valor` com acesso dinâmico.
-
-Exemplo:
-
-```lua
-local config = {
-  host = "localhost",
-  port = 8080
-}
-
-print(config.host)
-```
-
-Internamente no Go, é implementada como:
-
-```go
-type TitanTable struct {
-  fields map[string]TitanValue
-}
-```
-
----
-
 ## ▶️ Como executar
 
-### Requisitos:
+### Pré-requisitos:
 - [Go instalado](https://golang.org/dl/)
 
-### Executando um script:
+### Execução:
 
 ```bash
-go run main.go examples/test.titan
+go run main.go examples/hello.titan
 ```
 
 ---
 
 ## 🪪 Licença
+
 MIT
